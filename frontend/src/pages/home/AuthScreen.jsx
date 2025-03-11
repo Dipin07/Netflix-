@@ -1,10 +1,18 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { ChevronRight } from 'lucide-react'
 
 const AuthScreen = () => {
 
   const [email, setEmail] = useState("")
+
+  const navigate = useNavigate()
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    // send email to the url and redirect to the signup page.
+    navigate("/signup?email=" + email)
+  }
 
   return (
     <div className='hero-bg relative'>
@@ -23,7 +31,9 @@ const AuthScreen = () => {
         <p className='text-lg mb-4'>Watch anywhere. Cancel anytime.</p>
         <p className='mb-4'>Ready to watch? Enter your email to create or restart your membership.</p>
 
-        <form className='flex flex-col md:flex-row gap-4 w-1/2'>
+        <form
+          onSubmit={handleFormSubmit}
+          className='flex flex-col md:flex-row gap-4 w-1/2'>
           <input type="email"
             placeholder='Email address'
             className='p-2 rounded flex-1 bg-black/80 border border-gray-700'
@@ -135,8 +145,29 @@ const AuthScreen = () => {
         </div>
       </div>
 
-  {/* Separator */}
-  <div className='h-2 w-full bg-[#232323]' aria-hidden="true" />
+      {/* Separator */}
+      <div className='h-2 w-full bg-[#232323]' aria-hidden="true" />
+
+      {/* 4th section */}
+      <div className="bg-black text-white py-10">
+        <div className="flex flex-col-reverse  items-center justify-center max-w-6xl mx-auto md:flex-row px-4 md:px-2">
+
+          {/* left */}
+          <div className="flex1 relative">
+            <img src="/kids.png" alt="kids png" className='mt-4' />
+          </div>
+
+          {/* right */}
+          <div className="flex1 text-center md:text-left">
+            <h2 className='text-4xl md:text-5xl font-extrabold mb-4'>
+              Create profiles for kids
+            </h2>
+            <p className='text-lg md:text-xl'>
+              Send kids on adventures with thier favorite characters in a space made just for them-free with your membership.
+            </p>
+          </div>
+        </div>
+      </div>
 
     </div>
   )
