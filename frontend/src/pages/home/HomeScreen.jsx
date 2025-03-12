@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from '../../components/Navbar'
 import { Link } from 'react-router-dom'
-import { Info, Play } from 'lucide-react'
+import { FileQuestion, Info, Play } from 'lucide-react'
 import useGetTrendingContent from '../../components/hooks/useGetTrendingContent'
 import { ORIGINAL_IMG_BASE_URL } from '../../components/utlis/constants'
 import { MOVIE_CATEGORIES, TV_CATEGORIES, useContentStore } from '../../store/content'
@@ -11,10 +11,13 @@ const HomeScreen = () => {
   const { trendingContent } = useGetTrendingContent()
   const { contentType } = useContentStore()
 
+  const [imageLoading, setImageLoading] = useState(true)
+
   // loading Spinner 
   if (!trendingContent) return (
     <div className="h-screen text-white relative">
       <Navbar />
+      {/* shimmer */}
       <div className="shimmer absolute top-0 left-0 w-full h-full bg-black/70 flex items-center justify-center z-10"></div>
     </div>
   )
@@ -24,10 +27,20 @@ const HomeScreen = () => {
       <div className='relative h-screen text-white '>
         <Navbar />
 
+        {
+          imageLoading && (
+            <div className="shimmer absolute top-0 left-0 w-full h-full bg-black/70 flex items-center justify-center z-10"></div>
+          )
+        }
+
         <img src={ORIGINAL_IMG_BASE_URL + trendingContent?.backdrop_path}
           alt="hero-img"
           className='absolute top-0 left-0 w-full h-full object-cover -z-50'
+          onLoad={() => {
+            setImageLoading(false)
+          }}
         />
+
         <div className='absolute top-0 left-0 w-full h-full bg-black/50 -z-40'
           aria-hidden="true"
         />
@@ -36,7 +49,8 @@ const HomeScreen = () => {
 
           <div className="max-w-2xl">
             <h1 className='mt-4 text-6xl font-extrabold text-balance'>
-              {/* title is for moves and name is for tv shows */}
+              {/* title is for moves and name is for tv 
+              shows */}
               {trendingContent?.title || trendingContent?.name}
             </h1>
 
