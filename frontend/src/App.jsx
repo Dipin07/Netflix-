@@ -23,7 +23,6 @@ const App = () => {
       <Loader className='animate-spin text-red-600  size-10' />
     </div>
   }
-  console.log("auth use is here", user);
   return (
     <>
       <Routes>
